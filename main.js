@@ -1,10 +1,11 @@
 //select the textarea
-let input = document.querySelectorAll('textarea')[0];
-let wordCount = document.querySelectorAll('#wordCount')[0];
-let characterCount = document.querySelectorAll('#characterCount')[0];
-let sentenceCount = document.querySelectorAll('#sentenceCount')[0];
-let words = [];
-let sentences = [];
+let input = document.querySelectorAll('textarea')[0],
+wordCount = document.querySelectorAll('#wordCount')[0],
+characterCount = document.querySelectorAll('#characterCount')[0],
+sentenceCount = document.querySelectorAll('#sentenceCount')[0],
+readingTime = document.querySelectorAll('#readingTime')[0],
+words = [],
+sentences = [];
 
 const count = () => {
 	words = input.value.match(/\b[-?(\w+)?]+\b/gi);
@@ -24,6 +25,21 @@ const count = () => {
 	}
 
 	characterCount.innerHTML = chars;
+	readingTime.innerHTML = calc(words);
+}
+
+let calc = (words) => {
+	if (words != 0 && words != null) {
+		let seconds = Math.floor(words.length * 60 / 27);
+		if (seconds > 59) {
+			var minutes = Math.floor(seconds / 60);
+			seconds = seconds - minutes * 60;
+			return minutes + "m " + seconds + "s";
+		} else {
+			return seconds + "s";
+		}
+	}
+	return "0s";
 }
 
 input.addEventListener('keyup', count);
